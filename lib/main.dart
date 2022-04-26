@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 
+import './question.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return _MyAppState();
   }
 }
 
-class MyAppState extends State<MyApp> {
-  var questionIndex = 0;
+class _MyAppState extends State<MyApp> {
+  var _questionIndex = 0;
 
-  void answerQuestion() {
+  void _answerQuestion() {
     setState(() {
-      questionIndex += 1;
+      if (_questionIndex < 1) {
+        _questionIndex += 1;
+      } else {
+        return;
+      }
     });
-    print(questionIndex);
+    print(_questionIndex);
   }
 
   @override
@@ -24,6 +30,10 @@ class MyAppState extends State<MyApp> {
     var questions = [
       'What is your favorite color?',
       'What is your favorite animal?'
+    ];
+    var answers = [
+      ['Orange', 'Red', 'Black'],
+      ['Giraffe', 'Elephant', 'Dog'],
     ];
 
     return MaterialApp(
@@ -34,21 +44,23 @@ class MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: <Widget>[
-            Text(questions[questionIndex]),
+            Question(
+              questions[_questionIndex],
+            ),
             RaisedButton(
               child: Text('Answer 1'),
-              onPressed: () => print('Answer 1 chosen!'),
+              onPressed: _answerQuestion,
+              color: Color.fromARGB(255, 157, 121, 255),
             ),
             RaisedButton(
               child: Text('Answer 2'),
-              onPressed: () {
-                //...
-                print('Answer 2 chosen!');
-              },
+              onPressed: _answerQuestion,
+              color: Color.fromARGB(255, 157, 121, 255),
             ),
             RaisedButton(
               child: Text('Answer 3'),
-              onPressed: answerQuestion,
+              onPressed: _answerQuestion,
+              color: Color.fromARGB(255, 157, 121, 255),
             ),
           ],
         ),
